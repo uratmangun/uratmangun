@@ -18,3 +18,5 @@ In Javanese culture, names often carry deep symbolic meanings, reflecting hopes,
 Javanese names often blend physical and spiritual symbolism. The emphasis on "veins" (*urat*) might evoke the interconnectedness of life, while "mangun" highlights a duty to preserve or elevate that connection. Such names are typically bestowed to inspire the bearer to live up to these ideals.
 
 If this name belongs to a specific family or region, its meaning could carry additional layers known only within that context. In broader Javanese philosophy, however, it aligns with themes of **dharma** (duty) and **silih asih** (mutual care).
+
+[source](https://chat.deepseek.com/a/chat/s/83cd7508-ac65-4030-befc-02dee3fa9496)
