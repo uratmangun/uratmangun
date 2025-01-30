@@ -19,4 +19,4 @@ Nama Jawa sering menggabungkan simbolisme fisik dan spiritual. Penekanan pada "u
 
 Jika nama ini berasal dari keluarga atau daerah tertentu, maknanya mungkin memiliki lapisan tambahan yang hanya diketahui dalam konteks tersebut. Namun, dalam filosofi Jawa secara luas, nama ini sejalan dengan tema **dharma** (kewajiban) dan **silih asih** (saling mengasihi).  
 
-[Sumber](https://chat.deepseek.com/a/chat/s/83cd7508-ac65-4030-befc-02dee3fa9496)
+
