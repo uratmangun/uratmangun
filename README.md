@@ -1,22 +1,22 @@
-In Javanese culture, names often carry deep symbolic meanings, reflecting hopes, values, or ancestral connections. The name **"Uratmangun"** can be broken down into two components: 
+**Dalam budaya Jawa**, nama sering memiliki makna simbolis yang dalam, mencerminkan harapan, nilai-nilai, atau hubungan dengan leluhur. Nama **"Uratmangun"** dapat dipecah menjadi dua komponen:  
 
 1. **Urat** (ꦈꦫꦠ꧀):  
-   - Literally translates to "vein," "tendon," or "nerve," symbolizing **life force, vitality, or connection**.  
-   - Metaphorically, it can represent **lineage, ancestry**, or the **essence of existence**, akin to the idea of a "foundation" or "core strength."
+   - Secara harfiah berarti "pembuluh darah," "urat," atau "saraf," melambangkan **tenaga hidup, vitalitas, atau keterhubungan**.  
+   - Secara metaforis, dapat merepresentasikan **garis keturunan, leluhur**, atau **esensi keberadaan**, mirip dengan konsep "fondasi" atau "kekuatan inti."  
 
 2. **Mangun** (ꦩꦔꦸꦤ꧀):  
-   - Derived from the root word *angun* (ꦲꦔꦸꦤ꧀), meaning "to build," "to care for," or "to nurture."  
-   - It carries connotations of **growth, stewardship**, and **responsibility**, often linked to fostering community, family, or spiritual well-being.
+   - Berasal dari kata dasar *angun* (ꦲꦔꦸꦤ꧀), yang berarti "membangun," "merawat," atau "memelihara."  
+   - Membawa konotasi **pertumbuhan, penatalayanan**, dan **tanggung jawab**, sering dikaitkan dengan upaya mengembangkan komunitas, keluarga, atau kesejahteraan spiritual.  
 
-### Combined Interpretation:  
-**"Uratmangun"** likely symbolizes **"one who strengthens or nurtures the foundation (of life, family, or community)"**. It may reflect qualities such as:  
-- A guardian of lineage or tradition.  
-- A person who embodies resilience and care.  
-- Someone entrusted with maintaining harmony and vitality in their surroundings.
+### **Interpretasi Gabungan**:  
+**"Uratmangun"** kemungkinan besar melambangkan **"seseorang yang memperkuat atau merawat fondasi (kehidupan, keluarga, atau komunitas)"**. Nama ini mungkin mencerminkan kualitas seperti:  
+- Penjaga garis keturunan atau tradisi.  
+- Individu yang mewujudkan ketahanan dan kepedulian.  
+- Seseorang yang dipercaya untuk menjaga harmoni dan vitalitas di lingkungannya.  
 
-### Cultural Context:  
-Javanese names often blend physical and spiritual symbolism. The emphasis on "veins" (*urat*) might evoke the interconnectedness of life, while "mangun" highlights a duty to preserve or elevate that connection. Such names are typically bestowed to inspire the bearer to live up to these ideals.
+### **Konteks Budaya**:  
+Nama Jawa sering menggabungkan simbolisme fisik dan spiritual. Penekanan pada "urat" mungkin menggambarkan keterhubungan dalam kehidupan, sementara "mangun" menonjolkan kewajiban untuk melestarikan atau meningkatkan hubungan tersebut. Nama seperti ini biasanya diberikan untuk menginspirasi pemiliknya menjalankan nilai-nilai tersebut.  
 
-If this name belongs to a specific family or region, its meaning could carry additional layers known only within that context. In broader Javanese philosophy, however, it aligns with themes of **dharma** (duty) and **silih asih** (mutual care).
+Jika nama ini berasal dari keluarga atau daerah tertentu, maknanya mungkin memiliki lapisan tambahan yang hanya diketahui dalam konteks tersebut. Namun, dalam filosofi Jawa secara luas, nama ini sejalan dengan tema **dharma** (kewajiban) dan **silih asih** (saling mengasihi).  
 
-[source](https://chat.deepseek.com/a/chat/s/83cd7508-ac65-4030-befc-02dee3fa9496)
+[Sumber](https://chat.deepseek.com/a/chat/s/83cd7508-ac65-4030-befc-02dee3fa9496)
