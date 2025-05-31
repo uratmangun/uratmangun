@@ -33,4 +33,3 @@ In short, the opposite of the Dead Internet Theory would be the belief that:
 
 > **“The internet is still very much alive—driven by people, not bots.”**
 
-If you’re interested, I can help you develop a more structured version of this theory or even coin a new name for it.
