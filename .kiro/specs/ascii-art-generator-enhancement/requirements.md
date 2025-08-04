@@ -1,7 +1,7 @@
 # ASCII Art Generator Enhancement Requirements
 
 ## Introduction
-The ASCII Art Generator is a TypeScript project that fetches and lists all free AI models from OpenRouter and generates ASCII art using those models. The generator works completely automatically, producing random creative prompts and ASCII art using free models from OpenRouter, with robust fallback mechanisms and clear model attribution in the README.md file.
+The ASCII Art Generator is a TypeScript project that fetches and lists all free AI models from Github ai models and generates ASCII art using those models. The generator works completely automatically, producing random creative prompts and ASCII art using free models from OpenRouter, with robust fallback mechanisms and clear model attribution in the README.md file.
 
 ## Requirements
 
