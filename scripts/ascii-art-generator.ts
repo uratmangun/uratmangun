@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * ASCII Art Generator using Random Free Models from OpenRouter
+ * ASCII Art Generator using Random Free Models from GitHub Models
  * Picks a random free model and generates ASCII art based on user input
  */
 
@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { fetchAllModels } from './free-models.js';
 
 // Types
 interface Model {
@@ -25,35 +26,6 @@ interface Model {
   };
 }
 
-interface OpenRouterChatRequest {
-  model: string;
-  messages: Array<{
-    role: 'user' | 'assistant' | 'system';
-    content: string;
-  }>;
-  max_tokens?: number;
-  temperature?: number;
-}
-
-interface OpenRouterChatResponse {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: Array<{
-    index: number;
-    message: {
-      role: string;
-      content: string;
-    };
-    finish_reason: string;
-  }>;
-  usage: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
-}
 
 interface RandomPromptResult {
   prompt: string;
@@ -68,29 +40,38 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, '..', '.env') });
 
 const CONFIG = {
-  OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
-  OPENROUTER_BASE_URL: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
-  OPENROUTER_HTTP_REFERER: process.env.OPENROUTER_HTTP_REFERER || 'https://github.com/openrouter/ascii-art-generator',
-  OPENROUTER_X_TITLE: process.env.OPENROUTER_X_TITLE || 'ASCII Art Generator',
+  ADMIN_TOKEN: process.env.ADMIN_TOKEN || '',
   FREE_MODELS_FILE: join(__dirname, 'free-models.json'),
 };
 
 /**
- * Load free models from JSON file
+ * Fetch free models directly from GitHub Models catalog
  */
-function loadFreeModels(): Model[] {
+async function loadFreeModels(): Promise<Model[]> {
   try {
-    const jsonData = readFileSync(CONFIG.FREE_MODELS_FILE, 'utf-8');
-    const models = JSON.parse(jsonData) as Model[];
+    console.log('📚 Fetching free models from GitHub Models catalog...');
+    const models = await fetchAllModels();
     
-    // Filter to ensure we only get truly free models
-    return models.filter(model => 
-      model.pricing.prompt === '0' && 
-      model.pricing.completion === '0' &&
-      model.architecture.modality.includes('text')
-    );
+    // Convert GitHubModel to the Model interface used in ascii-art-generator
+    const convertedModels: Model[] = models.map(model => ({
+      id: model.id,
+      name: model.name,
+      description: model.summary || '',
+      pricing: {
+        prompt: '0', // All GitHub models are free to use
+        completion: '0'
+      },
+      context_length: 0, // Default value
+      architecture: {
+        modality: 'text',
+        tokenizer: 'GitHub Models'
+      }
+    }));
+    
+    return convertedModels;
   } catch (error) {
-    console.error('❌ Error loading free models:', error);
+    console.error('❌ Error fetching free models:', (error as Error).message);
+    throw error;
     console.log('💡 Make sure to run the free-models fetcher script first!');
     process.exit(1);
   }
@@ -137,13 +118,13 @@ function generateMockAsciiArt(prompt: string): string {
 }
 
 /**
- * Call OpenRouter API to generate ASCII art
+ * Call GitHub Models API to generate ASCII art
  */
 /**
- * Generate a random prompt using OpenRouter API
+ * Generate a random prompt using GitHub Models API
  */
 async function generateRandomPrompt(): Promise<RandomPromptResult> {
-  if (!CONFIG.OPENROUTER_API_KEY) {
+  if (!CONFIG.ADMIN_TOKEN) {
     // Return a default random prompt if no API key
     const defaultPrompts = [
       'a cat sitting on a computer keyboard',
@@ -172,9 +153,8 @@ Rules:
 Generate one random ASCII art prompt:`;
 
   // Try up to 5 times with different models
-  // Load free models from the JSON file
-  const freeModelsData = readFileSync(join(__dirname, 'free-models.json'), 'utf-8');
-  const freeModels: Model[] = JSON.parse(freeModelsData);
+  // Load free models directly from GitHub
+  const freeModels = await loadFreeModels();
   
   // Select up to 5 random models from the free models list
   const modelsToSelect = Math.min(5, freeModels.length);
@@ -183,10 +163,12 @@ Generate one random ASCII art prompt:`;
   const shuffledModels: Model[] = [...freeModels];
   for (let i = shuffledModels.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    // Type-safe swap using non-null assertions
-    const temp: Model = shuffledModels[i]!;
-    shuffledModels[i] = shuffledModels[j]!;
-    shuffledModels[j] = temp;
+    // Type-safe swap with proper undefined checks
+    if (shuffledModels[i] && shuffledModels[j]) {
+      const temp: Model = shuffledModels[i]!;
+      shuffledModels[i] = shuffledModels[j]!;
+      shuffledModels[j] = temp;
+    }
   }
   
   // Take the first N models from the shuffled list
@@ -198,49 +180,18 @@ Generate one random ASCII art prompt:`;
       break;
     }
     
-    const requestBody: OpenRouterChatRequest = {
-      model: models[attempt - 1] || 'openrouter/auto',
-      messages: [
-        {
-          role: 'user',
-          content: randomPromptRequest
-        }
-      ],
-      max_tokens: 100,
-      temperature: 0.8
-    };
-
     try {
-      const response = await fetch(`${CONFIG.OPENROUTER_BASE_URL}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${CONFIG.OPENROUTER_API_KEY}`,
-          'Content-Type': 'application/json',
-          'HTTP-Referer': CONFIG.OPENROUTER_HTTP_REFERER,
-          'X-Title': CONFIG.OPENROUTER_X_TITLE,
-        },
-        body: JSON.stringify(requestBody)
-      });
-
-      if (!response.ok) {
-        console.warn(`⚠️  Random prompt generation attempt ${attempt} failed (${response.status}), trying different model`);
-        continue;
-      }
-
-      const data = await response.json() as OpenRouterChatResponse;
+      // Import the GitHub Models API function
+      const { callGitHubModelsAPI } = await import('./github-models-api.js');
       
-      if (!data.choices || data.choices.length === 0) {
+      const result = await callGitHubModelsAPI(randomPromptRequest, models[attempt - 1] || 'openai/gpt-4.1');
+      
+      if (!result) {
         console.warn(`⚠️  No random prompt generated on attempt ${attempt}, trying different model`);
         continue;
       }
 
-      const firstChoice = data.choices[0];
-      if (!firstChoice?.message?.content) {
-        console.warn(`⚠️  Invalid response format on attempt ${attempt}, trying different model`);
-        continue;
-      }
-
-      return { prompt: firstChoice.message.content, model: data.model };
+      return { prompt: result, model: models[attempt - 1] || 'openai/gpt-4.1' };
     } catch (error) {
       console.warn(`⚠️  Error on attempt ${attempt}:`, error);
       // Continue to next attempt
@@ -281,13 +232,16 @@ function cleanupAsciiArt(asciiArt: string): string {
 }
 
 /**
- * Call OpenRouter API to generate ASCII art
+ * Call GitHub Models API to generate ASCII art
  */
 async function generateAsciiArt(model: Model, prompt: string): Promise<string> {
-  if (!CONFIG.OPENROUTER_API_KEY) {
+  if (!CONFIG.ADMIN_TOKEN) {
     console.log('⚠️  No API key found, using mock ASCII art generator for demonstration');
     return generateMockAsciiArt(prompt);
   }
+
+  // Import the GitHub Models API function
+  const { callGitHubModelsAPI } = await import('./github-models-api.js');
 
   const systemPrompt = `You are an ASCII art generator. Create detailed ASCII art based on the user's request. 
 Rules:
@@ -297,53 +251,13 @@ Rules:
 4. Keep the art reasonably sized (max 50 lines)
 5. Only respond with the ASCII art, no additional text or explanation`;
 
-  const requestBody: OpenRouterChatRequest = {
-    model: model.id,
-    messages: [
-      {
-        role: 'system',
-        content: systemPrompt
-      },
-      {
-        role: 'user',
-        content: `Create ASCII art of: ${prompt}`
-      }
-    ],
-    max_tokens: 2000,
-    temperature: 0.7
-  };
+  const fullPrompt = `${systemPrompt}\n\nCreate ASCII art of: ${prompt}`;
 
   try {
-    const response = await fetch(`${CONFIG.OPENROUTER_BASE_URL}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${CONFIG.OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': CONFIG.OPENROUTER_HTTP_REFERER,
-        'X-Title': CONFIG.OPENROUTER_X_TITLE,
-      },
-      body: JSON.stringify(requestBody)
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`OpenRouter API error (${response.status}): ${errorText}`);
-    }
-
-    const data = await response.json() as OpenRouterChatResponse;
-    
-    if (!data.choices || data.choices.length === 0) {
-      throw new Error('No response generated from the model');
-    }
-
-    const firstChoice = data.choices[0];
-    if (!firstChoice?.message?.content) {
-      throw new Error('Invalid response format from the model');
-    }
-
-    return cleanupAsciiArt(firstChoice.message.content);
+    const result = await callGitHubModelsAPI(fullPrompt, model.id);
+    return cleanupAsciiArt(result);
   } catch (error) {
-    console.error('❌ Error calling OpenRouter API:', error);
+    console.error('❌ Error calling GitHub Models API:', error);
     throw error;
   }
 }
@@ -405,7 +319,7 @@ ${asciiArt}
  */
 async function main(): Promise<void> {
   // Check for API key and warn if not found
-  if (!CONFIG.OPENROUTER_API_KEY) {
+  if (!CONFIG.ADMIN_TOKEN) {
     console.log('⚠️  No API key found, using mock ASCII art generator for demonstration');
   }
 
@@ -415,7 +329,7 @@ async function main(): Promise<void> {
   try {
     // Load free models
     console.log('📚 Loading free models...');
-    const freeModels = loadFreeModels();
+    const freeModels = await loadFreeModels();
     console.log(`✅ Found ${freeModels.length} free models`);
 
     // Pick random model
@@ -437,7 +351,7 @@ async function main(): Promise<void> {
       context_length: 0,
       architecture: {
         modality: 'text',
-        tokenizer: 'OpenRouter'
+        tokenizer: 'GitHub Models'
       },
       pricing: {
         prompt: '0',
@@ -505,8 +419,6 @@ export {
   displayModelInfo,
   cleanupAsciiArt,
   type Model,
-  type OpenRouterChatRequest,
-  type OpenRouterChatResponse,
   type RandomPromptResult
 };
 
