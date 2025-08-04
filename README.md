@@ -2,16 +2,50 @@
 
 ## Random Prompt
 
-**Model**: deepseek-v3-0324 (deepseek/deepseek-v3-0324)
+**Model**: [mistral-medium-2505 (mistral-ai/mistral-medium-2505)](#)
 
-**Prompt**: A sleepy octopus curled around a treasure chest in a sunken pirate wreck, with bubbles rising around it.
+**Prompt**: A cyberpunk owl perched on a neon-lit street sign, its glowing mechanical eyes scanning the rain-soaked alley below, with flickering holographic ads in the background.
 
 ## ASCII Art
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~##########~~~~~~~
-~~~~~~~~~~~~~~~~~~~~##
+```
+       _____
+      / _._ \
+     / /   \ \
+    / /  ^  \ \
+   / /  /|\  \ \
+  / /  / | \  \ \
+ / /  /  |  \  \ \
+/ /  /   |   \  \ \
+| | /____|____\ | |
+| |/     |     \| |
+| /      |      \ |
+|/       |       \|
+          |
+          |
+     _____|_____
+    /  CYBER  \
+   /   STREET  \
+  /_____________\
+          |
+          |      .:.
+          |     .:.:.
+          |    .:.:.:.
+  ____    |   .:.:.:.:.    ____
+ /    \   |  .:.:.:.:.:.  /    \
+|  ==  |  | .:.:.:.:.:.:. |  --  |
+|  ==  |  |.:.:.:.:.:.:.:.|  --  |
+ \____/   |:.:.:.:.:.:.:.: \____/
+          |:.:.:.:.:.:.:.:.:
+          | :.:.:.:.:.:.:.:
+          |  :.:.:.:.:.:.:
+          |   :.:.:.:.:.:
+          |    :.:.:.:.:
+          |     :.:.:.
+          |      :.:
+          |       :
+```
 
 ## Generation Model
 
-**Model**: Meta-Llama-3.1-405B-Instruct (meta/meta-llama-3.1-405b-instruct)
+**Model**: [Grok 3 (xai/grok-3)](https://github.com/marketplace/models/azureml-xai/grok-3)

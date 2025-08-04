@@ -3,6 +3,15 @@
  * Fetches and lists all models available from GitHub Models catalog
  */
 
+import dotenv from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+// Load environment variables
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env') });
+
 interface GitHubModel {
   id: string;
   name: string;
@@ -65,7 +74,8 @@ async function fetchAllModels(): Promise<GitHubModel[]> {
 function filterFreeModels(models: GitHubModel[]): GitHubModel[] {
   return models.filter(model => 
     model.supported_output_modalities && 
-    model.supported_output_modalities.includes('text')
+    model.supported_output_modalities.includes('text') &&
+    model.rate_limit_tier === 'high'
   );
 }
 

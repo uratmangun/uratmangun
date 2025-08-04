@@ -24,6 +24,7 @@ interface Model {
     modality: string;
     tokenizer: string;
   };
+  html_url?: string;
 }
 
 
@@ -65,7 +66,8 @@ async function loadFreeModels(): Promise<Model[]> {
       architecture: {
         modality: 'text',
         tokenizer: 'GitHub Models'
-      }
+      },
+      html_url: model.html_url || ''
     }));
     
     return convertedModels;
@@ -292,7 +294,7 @@ async function saveAsciiArtToFile(asciiArt: string, prompt: string, promptModel:
 
 ## Random Prompt
 
-**Model**: ${promptModel.name} (${promptModel.id})
+**Model**: [${promptModel.name} (${promptModel.id})](${promptModel.html_url || '#'})
 
 **Prompt**: ${prompt}
 
@@ -302,7 +304,7 @@ ${asciiArt}
 
 ## Generation Model
 
-**Model**: ${asciiArtModel.name} (${asciiArtModel.id})
+**Model**: [${asciiArtModel.name} (${asciiArtModel.id})](${asciiArtModel.html_url || '#'})
 `;
     
     // Write content to README.md (completely replace existing content)
