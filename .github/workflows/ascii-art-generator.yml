@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ADMIN_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -42,6 +42,8 @@ jobs:
           pnpm run ascii-art
 
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
