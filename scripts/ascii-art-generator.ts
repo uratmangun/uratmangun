@@ -127,12 +127,13 @@ function generateMockAsciiArt(prompt: string): string {
 
   // Try to match the prompt to a known mock art
   const lowerPrompt = prompt.toLowerCase();
-  if (lowerPrompt.includes("dog") && mockArts.dog) return mockArts.dog;
-  if (lowerPrompt.includes("cat") && mockArts.cat) return mockArts.cat;
-  if (lowerPrompt.includes("hat") && mockArts.hat) return mockArts.hat;
+  if (lowerPrompt.includes("dog") && mockArts.dog) return cleanupAsciiArt(mockArts.dog);
+  if (lowerPrompt.includes("cat") && mockArts.cat) return cleanupAsciiArt(mockArts.cat);
+  if (lowerPrompt.includes("hat") && mockArts.hat) return cleanupAsciiArt(mockArts.hat);
   
   // Return default mock art
-  return mockArts.default || "  _______\n /       \\n|  O   O  |\n|    ∆    |\n \\_______/\n    | |\n    | |";
+  const defaultArt = mockArts.default || "  _______\n /       \\n|  O   O  |\n|    ∆    |\n \\_______/\n    | |\n    | |";
+  return cleanupAsciiArt(defaultArt);
 }
 
 /**
@@ -252,6 +253,34 @@ Generate one random ASCII art prompt:`;
 }
 
 /**
+ * Clean up ASCII art to ensure proper bracket closure and formatting
+ */
+function cleanupAsciiArt(asciiArt: string): string {
+  let cleaned = asciiArt.trim();
+  
+  // Count and balance common bracket types
+  const brackets = [
+    { open: '(', close: ')' },
+    { open: '[', close: ']' },
+    { open: '{', close: '}' },
+    { open: '<', close: '>' }
+  ];
+  
+  for (const bracket of brackets) {
+    const openCount = (cleaned.match(new RegExp('\\' + bracket.open, 'g')) || []).length;
+    const closeCount = (cleaned.match(new RegExp('\\' + bracket.close, 'g')) || []).length;
+    
+    // If we have more opening brackets than closing, add closing brackets
+    if (openCount > closeCount) {
+      const missing = openCount - closeCount;
+      cleaned += bracket.close.repeat(missing);
+    }
+  }
+  
+  return cleaned;
+}
+
+/**
  * Call OpenRouter API to generate ASCII art
  */
 async function generateAsciiArt(model: Model, prompt: string): Promise<string> {
@@ -312,7 +341,7 @@ Rules:
       throw new Error('Invalid response format from the model');
     }
 
-    return firstChoice.message.content;
+    return cleanupAsciiArt(firstChoice.message.content);
   } catch (error) {
     console.error('❌ Error calling OpenRouter API:', error);
     throw error;
@@ -348,13 +377,17 @@ async function saveAsciiArtToFile(asciiArt: string, prompt: string, promptModel:
     const readmeContent = `# ASCII Art Generator Output
 
 ## Random Prompt
+
 **Model**: ${promptModel.name} (${promptModel.id})
+
 **Prompt**: ${prompt}
 
 ## ASCII Art
+
 ${asciiArt}
 
 ## Generation Model
+
 **Model**: ${asciiArtModel.name} (${asciiArtModel.id})
 `;
     
@@ -470,6 +503,7 @@ export {
   generateAsciiArt,
   generateRandomPrompt,
   displayModelInfo,
+  cleanupAsciiArt,
   type Model,
   type OpenRouterChatRequest,
   type OpenRouterChatResponse,
