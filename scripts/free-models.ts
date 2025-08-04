@@ -75,7 +75,7 @@ function filterFreeModels(models: GitHubModel[]): GitHubModel[] {
   return models.filter(model => 
     model.supported_output_modalities && 
     model.supported_output_modalities.includes('text') &&
-    model.rate_limit_tier === 'high'
+    model.rate_limit_tier === 'low'
   );
 }
 

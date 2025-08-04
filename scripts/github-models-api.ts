@@ -63,7 +63,8 @@ async function callGitHubModelsAPI(prompt: string, model: string = "openai/gpt-4
         "X-GitHub-Api-Version": "2022-11-28",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      signal: AbortSignal.timeout(60000) // 1 minute timeout
     });
 
     if (!response.ok) {
@@ -77,9 +78,14 @@ async function callGitHubModelsAPI(prompt: string, model: string = "openai/gpt-4
     } else {
       throw new Error("No response content received from the model");
     }
-  } catch (error) {
-    console.error("Error calling GitHub Models API:", error);
-    throw error;
+  } catch (error: any) {
+    if (error.name === "TimeoutError") {
+      console.error("Timeout calling GitHub Models API:", error.message);
+      throw new Error(`Timeout calling GitHub Models API: ${error.message}`);
+    } else {
+      console.error("Error calling GitHub Models API:", error);
+      throw error;
+    }
   }
 }
 
