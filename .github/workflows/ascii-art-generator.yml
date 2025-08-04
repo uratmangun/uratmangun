@@ -38,6 +38,8 @@ jobs:
       - name: Run ASCII art generator
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_X_TITLE: ${{ secrets.OPENROUTER_X_TITLE }}
+          OPENROUTER_BASE_URL: ${{ secrets.OPENROUTER_BASE_URL }}
         run: |
           pnpm run ascii-art
 
