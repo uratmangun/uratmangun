@@ -2,44 +2,45 @@
 
 ## Random Prompt
 
-**Model**: [meta-llama-3.1-8b-instruct (meta/meta-llama-3.1-8b-instruct)](https://github.com/marketplace/models/azureml-meta/Meta-Llama-3-1-8B-Instruct)
+**Model**: [cohere-command-a (cohere/cohere-command-a)](https://github.com/marketplace/models/azureml-cohere/cohere-command-a)
 
-**Prompt**: A deserted, glowing hot air balloon soaring through a constellation of fireflies on a
+**Prompt**: A majestic, moonlit owl perched on a gnarled oak branch, its feathers ruffled by a gentle breeze, with glowing eyes reflecting the starry night sky.
 
 ## ASCII Art
 
 ```
-          .  .             .           .                
-         .    *         .             .    .            
-       .       .      *                .      .         
-      .         .   .                   .   .           
-     .           *       .             .     .          
-    .             .     .      .-.    .       .         
-   .               .   .       /   \      .     .        
-  .                 . .       |     |    .   .    *      
- .      .           .   .     |     |  .       .         
-.         .         .     .   \   /  .    .        .     
-  .       .         .       .  `-'  .       .     .      
-   .     .   .      .         .     .   .   .     .      
-    .   .     .    .   .             .     .   .         
-     . .       .  .     .      .            . .          
-      .         .       .   .                .           
-       .       .         . .                  .          
-        .     .           .       .           .          
-         .   .             .     .     .     .           
-          . .               .   .       .   .            
-           .                 . .         . .             
-            .                .           .               
-             .              .             .              
-              .            .               .             
-               .          .                 .            
-                .        .                   .           
-                 .      .                     .          
-                  .    .                       .         
-                   .  .                         .        
-                    ..                           .       
+          _____
+         /     \
+        /_______\
+        |  _  _  |
+        |  o  o  | 
+        |   ^    | 
+        |  _/    | 
+         \_______/ 
+            ||
+            ||  ___
+            ||_/   \
+            ||      |
+            ||      |_
+            ||        \
+            ||         \
+            ||          \
+            ||     _____\_
+            ||    /       \
+            ||   /         \
+            ||  /  .  .     \
+            || /   ..  .     \
+            ||/    .  ..      \
+            ||     .   .       \
+            ||     ..   .       \
+            ||     .    ..       \
+            ||     ..    .        \
+            ||     .     ..        \
+            ||     ..     .         \
+            ||     .      ..         \
+            ||____/________\_________\
 ```
 
 ## Generation Model
 
-**Model**: [Grok 3 Mini (xai/grok-3-mini)](https://github.com/marketplace/models/azureml-xai/grok-3-mini)
+**Model**: [Grok 3 (xai/grok-3)](https://github.com/marketplace/models/azureml-xai/grok-3)
