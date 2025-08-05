@@ -1,7 +1,7 @@
-**Model**: [codestral-2501 (mistral-ai/codestral-2501)](https://github.com/marketplace/models/azureml-mistral/Codestral-2501)
+**Model**: [grok-3-mini (xai/grok-3-mini)](https://github.com/marketplace/models/azureml-xai/grok-3-mini)
 
-**Prompt**: A towering, ancient oak tree standing defiantly amidst a storm, its gnarled roots intertwined with a rusted, Victorian-era iron fence, and a lone, weathered bench nearby, as if waiting for a ghostly visitor.
+**Prompt**: A crystal-clear ice cave with frozen stalactites and a faint blue glow from embedded minerals.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754357896913-16qcdw.png)
+![Generated Image](./images/generated-1754434667844-9byxc7.png)
