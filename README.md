@@ -1,7 +1,7 @@
-**Model**: [ministral-3b (mistral-ai/ministral-3b)](https://github.com/marketplace/models/azureml-mistral/Ministral-3B)
+**Model**: [codestral-2501 (mistral-ai/codestral-2501)](https://github.com/marketplace/models/azureml-mistral/Codestral-2501)
 
-**Prompt**: "An ancient, gnarled oak tree standing sentinel in a field of iridescent, bioluminescent flowers, with a lone, rusted, vintage bicycle leaning against its trunk."
+**Prompt**: A towering, ancient oak tree standing defiantly amidst a storm, its gnarled roots intertwined with a rusted, Victorian-era iron fence, and a lone, weathered bench nearby, as if waiting for a ghostly visitor.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754357581330-8sbd0a.png)
+![Generated Image](./images/generated-1754357896913-16qcdw.png)
