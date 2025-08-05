@@ -90,28 +90,29 @@ async function callGitHubModelsAPI(prompt: string, model: string = "openai/gpt-4
 }
 
 /**
- * Generates ASCII art using the GitHub Models API
- * @param prompt The prompt to generate ASCII art from
- * @returns The generated ASCII art
+ * Generates images using the GitHub Models API
+ * @param prompt The prompt to generate images from
+ * @returns The generated image
  */
-async function generateASCIIArt(prompt: string): Promise<string> {
+async function generateImageFromGitHub(prompt: string): Promise<string> {
   try {
-    // For ASCII art generation, we might want to specify a specific instruction
-    const asciiPrompt = `Please create ASCII art for the following subject: ${prompt}`;
-    const result = await callGitHubModelsAPI(asciiPrompt);
-    return result;
+    // For image generation, we might want to specify a specific instruction
+    const imagePrompt = `Please create an image for the following subject: ${prompt}`;
+    const response = await callGitHubModelsAPI(imagePrompt);
+    return response;
   } catch (error) {
-    console.error("Error generating ASCII art:", error);
+    console.error("Error generating image:", error);
     throw error;
   }
 }
 
 /**
- * Saves ASCII art to a file in the outputs directory
- * @param asciiArt The ASCII art to save
- * @param prompt The original prompt used to generate the ASCII art
+ * Saves images to a file in the outputs directory
+ * @param image The image to save
+ * @param prompt The original prompt used to generate the image
+ * @returns The file path where the image was saved
  */
-function saveASCIIArtToFile(asciiArt: string, prompt: string): string {
+function saveImageToFile(image: string, prompt: string): string {
   // Create outputs directory if it doesn't exist
   const outputsDir = path.join(__dirname, '..', 'outputs');
   if (!fs.existsSync(outputsDir)) {
@@ -120,11 +121,11 @@ function saveASCIIArtToFile(asciiArt: string, prompt: string): string {
 
   // Create filename with timestamp
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const filename = `ascii-art-${timestamp}.txt`;
+  const filename = `image-${timestamp}.txt`;
   const filepath = path.join(outputsDir, filename);
 
-  // Save ASCII art to file
-  fs.writeFileSync(filepath, asciiArt);
+  // Save image to file
+  fs.writeFileSync(filepath, image);
 
   return filepath;
 }
@@ -151,7 +152,7 @@ async function main() {
 }
 
 // Export functions for use in other modules
-export { callGitHubModelsAPI, generateASCIIArt, saveASCIIArtToFile };
+export { callGitHubModelsAPI, generateImageFromGitHub, saveImageToFile };
 
 // Run main function if this script is executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {

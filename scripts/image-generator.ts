@@ -1,14 +1,15 @@
 #!/usr/bin/env tsx
 /**
- * ASCII Art Generator using Random Free Models from GitHub Models
- * Picks a random free model and generates ASCII art based on user input
+ * Image Generator using Together AI
+ * Picks a random prompt and generates an image using Together AI API
  */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { fetchAllModels } from './free-models.js';
+import Together from 'together-ai';
 
 // Types
 interface Model {
@@ -42,6 +43,7 @@ dotenv.config({ path: join(__dirname, '..', '.env') });
 
 const CONFIG = {
   ADMIN_TOKEN: process.env.ADMIN_TOKEN || '',
+  TOGETHER_API_KEY: process.env.TOGETHER_API_KEY || '',
   FREE_MODELS_FILE: join(__dirname, 'free-models.json'),
 };
 
@@ -53,7 +55,7 @@ async function loadFreeModels(): Promise<Model[]> {
     console.log('📚 Fetching free models from GitHub Models catalog...');
     const models = await fetchAllModels();
     
-    // Convert GitHubModel to the Model interface used in ascii-art-generator
+    // Convert GitHubModel to the Model interface used in image-generator
     const convertedModels: Model[] = models.map(model => ({
       id: model.id,
       name: model.name,
@@ -95,33 +97,17 @@ function pickRandomModel(models: Model[]): Model {
 }
 
 /**
- * Generate mock ASCII art for demonstration purposes
+ * Generate mock image name for demonstration purposes
  */
-function generateMockAsciiArt(prompt: string): string {
-  // This is a simple mock generator that creates basic ASCII art
+function generateMockImageName(prompt: string): string {
+  // This is a simple mock generator that creates a mock image file name
   // In a real implementation, this would be replaced with actual API calls
   
-  const mockArts: Record<string, string> = {
-    "dog": `        __\n    (___())\`\n    /,    /\n   //\'--\'\\\n  /         \\`,
-    "cat": `    /\_/\  \n   ( ^.^ )\n    )   (\n   ( v v )\n  ^^  |  ^^`,
-    "hat": `    _____\n   /     \\\n  | () () |\n   \\  ^  /\n    |||||\n    |||||`,
-    "default": `  _______\n /       \\\n|  O   O  |\n|    ∆    |\n \\_______/\n    | |\n    | |`
-  };
-
-  // Try to match the prompt to a known mock art
-  const lowerPrompt = prompt.toLowerCase();
-  if (lowerPrompt.includes("dog") && mockArts.dog) return cleanupAsciiArt(mockArts.dog);
-  if (lowerPrompt.includes("cat") && mockArts.cat) return cleanupAsciiArt(mockArts.cat);
-  if (lowerPrompt.includes("hat") && mockArts.hat) return cleanupAsciiArt(mockArts.hat);
-  
-  // Return default mock art
-  const defaultArt = mockArts.default || "  _______\n /       \\n|  O   O  |\n|    ∆    |\n \\_______/\n    | |\n    | |";
-  return cleanupAsciiArt(defaultArt);
+  return `generated-image.png`;
 }
 
 /**
  * Call GitHub Models API to generate ASCII art
- */
 /**
  * Generate a random prompt using GitHub Models API
  */
@@ -129,30 +115,30 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
   if (!CONFIG.ADMIN_TOKEN) {
     // Return a default random prompt if no API key
     const defaultPrompts = [
-      'a cat sitting on a computer keyboard',
-      'a dog wearing sunglasses',
-      'a robot making coffee',
-      'a dragon flying over mountains',
-      'a spaceship landing on mars',
-      'a wizard casting spells',
-      'a knight with shining armor',
-      'a futuristic city skyline',
-      'a wise owl reading a book',
-      'a playful dolphin jumping'
+      'a majestic oak tree in a field',
+      'a wooden chair in a cozy room',
+      'a vintage lamp on a desk',
+      'a mountain landscape at sunset',
+      'a house with a garden and fence',
+      'a bookshelf filled with books',
+      'a classic car in a driveway',
+      'a bridge over a calm river',
+      'a lighthouse on a rocky shore',
+      'a castle on a hill'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
-    return { prompt: selectedPrompt || 'a cat sitting on a computer keyboard', model: 'Fallback: Default Prompt' };
+    return { prompt: selectedPrompt || 'a majestic oak tree in a field', model: 'Fallback: Default Prompt' };
   }
 
-  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for ASCII art.
+  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for image generation.
 Rules:
 1. Be creative and unique
-2. Focus on concrete subjects (animals, objects, characters, scenes)
+2. Focus on concrete inanimate subjects (trees, furniture, buildings, landscapes, etc.)
 3. Include some descriptive details
 4. Keep it concise but imaginative
 5. Only respond with the prompt, no additional text
 
-Generate one random ASCII art prompt:`;
+Generate one random image generation prompt:`;
 
   // Try up to 5 times with different models
   // Load free models directly from GitHub
@@ -212,66 +198,49 @@ Generate one random ASCII art prompt:`;
 }
 
 /**
- * Clean up ASCII art to ensure proper bracket closure and formatting
- */
-function cleanupAsciiArt(asciiArt: string): string {
-  let cleaned = asciiArt.trim();
-  
-  // Count and balance common bracket types
-  const brackets = [
-    { open: '(', close: ')' },
-    { open: '[', close: ']' },
-    { open: '{', close: '}' },
-    { open: '<', close: '>' }
-  ];
-  
-  for (const bracket of brackets) {
-    const openCount = (cleaned.match(new RegExp('\\' + bracket.open, 'g')) || []).length;
-    const closeCount = (cleaned.match(new RegExp('\\' + bracket.close, 'g')) || []).length;
-    
-    // If we have more opening brackets than closing, add closing brackets
-    if (openCount > closeCount) {
-      const missing = openCount - closeCount;
-      cleaned += bracket.close.repeat(missing);
-    }
-  }
-  
-  return cleaned;
-}
-
-/**
  * Call GitHub Models API to generate ASCII art
  */
-async function generateAsciiArt(model: Model, prompt: string): Promise<string> {
-  if (!CONFIG.ADMIN_TOKEN) {
-    console.log('⚠️  No API key found, using mock ASCII art generator for demonstration');
-    return generateMockAsciiArt(prompt);
+async function generateImage(prompt: string): Promise<string> {
+  if (!CONFIG.TOGETHER_API_KEY) {
+    console.log('⚠️  No API key found, using mock image generator for demonstration');
+    return generateMockImageName(prompt);
   }
 
-  // Import the GitHub Models API function
-  const { callGitHubModelsAPI } = await import('./github-models-api.js');
-
-  const systemPrompt = `You are an ASCII art generator. Create detailed ASCII art based on the user's request. 
-Rules:
-1. Use only standard ASCII characters (no Unicode)
-2. Make the art detailed and recognizable
-3. Use different characters for shading (., -, =, #, @, etc.)
-4. Keep the art reasonably sized (max 50 lines)
-5. Only respond with the ASCII art, no additional text or explanation`;
-
-  const fullPrompt = `${systemPrompt}\n\nCreate ASCII art of: ${prompt}`;
+  const together = new Together({
+    apiKey: CONFIG.TOGETHER_API_KEY,
+  });
 
   try {
-    const result = await callGitHubModelsAPI(fullPrompt, model.id);
-    return cleanupAsciiArt(result);
-  } catch (error: any) {
-    if (error.name === "TimeoutError" || error.message?.includes("Timeout")) {
-      console.error('❌ Timeout calling GitHub Models API:', error.message);
-      throw new Error(`Timeout calling GitHub Models API: ${error.message}`);
-    } else {
-      console.error('❌ Error calling GitHub Models API:', error);
-      throw error;
+    const response = await together.images.create({
+      model: "black-forest-labs/FLUX.1-schnell-Free",
+      prompt: prompt,
+      response_format: "base64"
+    });
+
+    // Create images directory if it doesn't exist
+    const imagesDir = join(__dirname, '..', 'images');
+    if (!existsSync(imagesDir)) {
+      mkdirSync(imagesDir, { recursive: true });
     }
+
+    // Save the base64 image data to a file
+    if (response.data && response.data.length > 0) {
+      const imageObject = response.data[0];
+      if (imageObject && 'b64_json' in imageObject && imageObject.b64_json) {
+        const imageName = `generated-image.png`;
+        const imagePath = join(imagesDir, imageName);
+        writeFileSync(imagePath, imageObject.b64_json, "base64");
+        console.log(`✅ Image saved to ${imagePath}`);
+        return imageName;
+      } else {
+        throw new Error('❌ No image data received');
+      }
+    } else {
+      throw new Error('❌ No image data received');
+    }
+  } catch (error: any) {
+    console.error('❌ Error generating image:', error);
+    throw error;
   }
 }
 
@@ -293,36 +262,28 @@ function displayModelInfo(model: Model): void {
 }
 
 /**
- * Save ASCII art to a file
+ * Save image information to README.md
  */
-async function saveAsciiArtToFile(asciiArt: string, prompt: string, promptModel: Model, asciiArtModel: Model): Promise<void> {
+async function saveImageToFile(imageName: string, prompt: string, promptModel: Model): Promise<void> {
   try {
     // Path to README.md file
     const readmePath = join(__dirname, '..', 'README.md');
     
-    // Create content with ASCII art and model information
-    const readmeContent = `# ASCII Art Generator Output
-
-## Random Prompt
-
-**Model**: [${promptModel.name} (${promptModel.id})](${promptModel.html_url || '#'})
+    // Create content with image markdown and prompt model information only
+    const readmeContent = `**Model**: [${promptModel.name} (${promptModel.id})](${promptModel.html_url || '#'})
 
 **Prompt**: ${prompt}
 
-## ASCII Art
+## Generated Image
 
-${asciiArt}
-
-## Generation Model
-
-**Model**: [${asciiArtModel.name} (${asciiArtModel.id})](${asciiArtModel.html_url || '#'})
+![Generated Image](./images/${imageName})
 `;
     
     // Write content to README.md (completely replace existing content)
     writeFileSync(readmePath, readmeContent);
-    console.log('💾 README.md completely replaced with ASCII art and model info');
+    console.log('💾 README.md completely replaced with image and model info');
   } catch (error) {
-    console.error('❌ Error replacing README.md with ASCII art:', error);
+    console.error('❌ Error replacing README.md with image:', error);
     throw error;
   }
 }
@@ -336,7 +297,7 @@ async function main(): Promise<void> {
     console.log('⚠️  No API key found, using mock ASCII art generator for demonstration');
   }
 
-  console.log('🎨 ASCII Art Generator with Random Free Models');
+  console.log('🎨 Image Generator with Random Free Models');
   console.log('='.repeat(50));
 
   try {
@@ -379,24 +340,24 @@ async function main(): Promise<void> {
 
     console.log('⏳ Please wait...\n');
 
-    // Generate ASCII art with retry logic
-    let asciiArt = '';
+    // Generate image with retry logic
+    let imageName = '';
     let asciiArtModel = selectedModel;
     let maxRetries = 10;
     let retries = 0;
     
     while (retries < maxRetries) {
       try {
-        asciiArt = await generateAsciiArt(asciiArtModel, originalPrompt);
+        imageName = await generateImage(originalPrompt);
         break; // Success, exit the loop
       } catch (artError: any) {
         retries++;
         if (artError.name === "TimeoutError" || artError.message?.includes("Timeout")) {
-          console.log(`⚠️  ASCII art generation attempt ${retries} timed out, trying different model`);
+          console.log(`⚠️  Image generation attempt ${retries} timed out, trying different model`);
         } else if (artError.message?.includes("403")) {
-          console.log(`⚠️  ASCII art generation attempt ${retries} forbidden (403), trying different model`);
+          console.log(`⚠️  Image generation attempt ${retries} forbidden (403), trying different model`);
         } else {
-          console.log(`⚠️  ASCII art generation attempt ${retries} failed, trying different model`);
+          console.log(`⚠️  Image generation attempt ${retries} failed, trying different model`);
         }
         
         // If we've exhausted our retries, re-throw the error
@@ -411,23 +372,23 @@ async function main(): Promise<void> {
     }
 
     // Display result
-    console.log('🎨 Generated ASCII Art:');
+    console.log('🎨 Generated Image:');
     console.log('='.repeat(50));
-    console.log(asciiArt);
+    console.log(`✨ Generated image: ${imageName}`);
     console.log('='.repeat(50));
     console.log(`✨ Generated by: ${asciiArtModel.name}`);
 
     // Save to file with model info
     try {
-      // Save both the ASCII art and the model information that generated the prompt and art
-      await saveAsciiArtToFile(asciiArt, originalPrompt, promptModel, asciiArtModel);
-      console.log('✅ Successfully updated README.md with ASCII art and model info!');
+      // Save both the image name and the model information that generated the prompt and art
+      await saveImageToFile(imageName, originalPrompt, promptModel);
+      console.log('✅ Successfully updated README.md with image and model info!');
     } catch (saveError) {
-      console.error('⚠️  Failed to update README.md with ASCII art, but generation was successful');
+      console.error('⚠️  Failed to update README.md with image, but generation was successful');
     }
 
   } catch (error) {
-    console.error('❌ Failed to generate ASCII art:', error);
+    console.error('❌ Failed to generate image:', error);
     process.exit(1);
   }
 }
@@ -438,10 +399,9 @@ async function main(): Promise<void> {
 export {
   loadFreeModels,
   pickRandomModel,
-  generateAsciiArt,
+  generateImage,
   generateRandomPrompt,
   displayModelInfo,
-  cleanupAsciiArt,
   type Model,
   type RandomPromptResult
 };
