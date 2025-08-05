@@ -4,7 +4,7 @@
  * Picks a random prompt and generates an image using Together AI API
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync, readdirSync, unlinkSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -20,14 +20,17 @@ interface Model {
     prompt: string;
     completion: string;
   };
-  context_length: number;
+  context_length?: number;
   architecture: {
     modality: string;
-    tokenizer: string;
+    tokenizer?: string;
+  };
+  capabilities?: {
+    vision?: boolean;
+    function_calling?: boolean;
   };
   html_url?: string;
 }
-
 
 interface RandomPromptResult {
   prompt: string;
@@ -54,7 +57,7 @@ async function loadFreeModels(): Promise<Model[]> {
   try {
     console.log('📚 Fetching free models from GitHub Models catalog...');
     const models = await fetchAllModels();
-    
+
     // Convert GitHubModel to the Model interface used in image-generator
     const convertedModels: Model[] = models.map(model => ({
       id: model.id,
@@ -71,13 +74,12 @@ async function loadFreeModels(): Promise<Model[]> {
       },
       html_url: model.html_url || ''
     }));
-    
+
     return convertedModels;
   } catch (error) {
     console.error('❌ Error fetching free models:', (error as Error).message);
-    throw error;
     console.log('💡 Make sure to run the free-models fetcher script first!');
-    process.exit(1);
+    throw error;
   }
 }
 
@@ -97,13 +99,33 @@ function pickRandomModel(models: Model[]): Model {
 }
 
 /**
- * Generate mock image name for demonstration purposes
+ * Generate random image name
  */
-function generateMockImageName(prompt: string): string {
-  // This is a simple mock generator that creates a mock image file name
-  // In a real implementation, this would be replaced with actual API calls
-  
-  return `generated-image.png`;
+function generateRandomImageName(): string {
+  const timestamp = Date.now();
+  const randomId = Math.random().toString(36).substring(2, 8);
+  return `generated-${timestamp}-${randomId}.png`;
+}
+
+/**
+ * Clear all files in the images directory
+ */
+function clearImagesDirectory(imagesDir: string): void {
+  try {
+    if (existsSync(imagesDir)) {
+      const files = readdirSync(imagesDir);
+      for (const file of files) {
+        const filePath = join(imagesDir, file);
+        unlinkSync(filePath);
+        console.log(`🗑️  Deleted: ${file}`);
+      }
+      console.log(`✅ Cleared ${files.length} files from images directory`);
+    } else {
+      console.log('📁 Images directory does not exist, will be created');
+    }
+  } catch (error) {
+    console.error('❌ Error clearing images directory:', error);
+  }
 }
 
 /**
@@ -143,10 +165,10 @@ Generate one random image generation prompt:`;
   // Try up to 5 times with different models
   // Load free models directly from GitHub
   const freeModels = await loadFreeModels();
-  
+
   // Select up to 5 random models from the free models list
   const modelsToSelect = Math.min(5, freeModels.length);
-  
+
   // Create a copy of freeModels and shuffle it
   const shuffledModels: Model[] = [...freeModels];
   for (let i = shuffledModels.length - 1; i > 0; i--) {
@@ -158,22 +180,22 @@ Generate one random image generation prompt:`;
       shuffledModels[j] = temp;
     }
   }
-  
+
   // Take the first N models from the shuffled list
   const models = shuffledModels.slice(0, modelsToSelect).map(model => model.id);
-  
+
   for (let attempt = 1; attempt <= 10 && attempt <= models.length; attempt++) {
     // If we've exhausted our selected models, break
     if (attempt > models.length) {
       break;
     }
-    
+
     try {
       // Import the GitHub Models API function
       const { callGitHubModelsAPI } = await import('./github-models-api.js');
-      
+
       const result = await callGitHubModelsAPI(randomPromptRequest, models[attempt - 1] || 'openai/gpt-4.1');
-      
+
       if (!result) {
         console.warn(`⚠️  No random prompt generated on attempt ${attempt}, trying different model`);
         continue;
@@ -203,7 +225,7 @@ Generate one random image generation prompt:`;
 async function generateImage(prompt: string): Promise<string> {
   if (!CONFIG.TOGETHER_API_KEY) {
     console.log('⚠️  No API key found, using mock image generator for demonstration');
-    return generateMockImageName(prompt);
+    return generateRandomImageName();
   }
 
   const together = new Together({
@@ -227,7 +249,7 @@ async function generateImage(prompt: string): Promise<string> {
     if (response.data && response.data.length > 0) {
       const imageObject = response.data[0];
       if (imageObject && 'b64_json' in imageObject && imageObject.b64_json) {
-        const imageName = `generated-image.png`;
+        const imageName = generateRandomImageName();
         const imagePath = join(imagesDir, imageName);
         writeFileSync(imagePath, imageObject.b64_json, "base64");
         console.log(`✅ Image saved to ${imagePath}`);
@@ -250,11 +272,11 @@ async function generateImage(prompt: string): Promise<string> {
 function displayModelInfo(model: Model): void {
   console.log(`\n🎨 Selected Model: ${model.name}`);
   console.log(`📝 Model ID: ${model.id}`);
-  console.log(`🧠 Context Length: ${model.context_length.toLocaleString()} tokens`);
+  console.log(`🧠 Context Length: ${model.context_length?.toLocaleString() || 'Unknown'} tokens`);
   console.log(`⚙️  Tokenizer: ${model.architecture.tokenizer}`);
   if (model.description) {
-    const shortDesc = model.description.length > 150 
-      ? model.description.substring(0, 150) + '...' 
+    const shortDesc = model.description.length > 150
+      ? model.description.substring(0, 150) + '...'
       : model.description;
     console.log(`📖 Description: ${shortDesc}`);
   }
@@ -268,7 +290,7 @@ async function saveImageToFile(imageName: string, prompt: string, promptModel: M
   try {
     // Path to README.md file
     const readmePath = join(__dirname, '..', 'README.md');
-    
+
     // Create content with image markdown and prompt model information only
     const readmeContent = `**Model**: [${promptModel.name} (${promptModel.id})](${promptModel.html_url || '#'})
 
@@ -278,7 +300,7 @@ async function saveImageToFile(imageName: string, prompt: string, promptModel: M
 
 ![Generated Image](./images/${imageName})
 `;
-    
+
     // Write content to README.md (completely replace existing content)
     writeFileSync(readmePath, readmeContent);
     console.log('💾 README.md completely replaced with image and model info');
@@ -320,7 +342,7 @@ async function main(): Promise<void> {
     // Find the actual model in our free models list to get the html_url
     const allFreeModels = await loadFreeModels();
     const actualPromptModel = allFreeModels.find(model => model.id === promptResult.model);
-    
+
     // Create a Model object for the prompt generation model
     const promptModel: Model = {
       id: promptResult.model, // Use the actual model ID that generated the prompt
@@ -340,12 +362,16 @@ async function main(): Promise<void> {
 
     console.log('⏳ Please wait...\n');
 
+    // Clear images directory before generating new image
+    const imagesDir = join(__dirname, '..', 'images');
+    clearImagesDirectory(imagesDir);
+
     // Generate image with retry logic
     let imageName = '';
     let asciiArtModel = selectedModel;
     let maxRetries = 10;
     let retries = 0;
-    
+
     while (retries < maxRetries) {
       try {
         imageName = await generateImage(originalPrompt);
@@ -359,12 +385,12 @@ async function main(): Promise<void> {
         } else {
           console.log(`⚠️  Image generation attempt ${retries} failed, trying different model`);
         }
-        
+
         // If we've exhausted our retries, re-throw the error
         if (retries >= maxRetries) {
           throw artError;
         }
-        
+
         // Pick a different model for retry
         asciiArtModel = pickRandomModel(freeModels);
         console.log(`🔄 Retrying with model: ${asciiArtModel.name}`);
