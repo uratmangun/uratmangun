@@ -1,7 +1,7 @@
-**Model**: [grok-3-mini (xai/grok-3-mini)](https://github.com/marketplace/models/azureml-xai/grok-3-mini)
+**Model**: [phi-3-mini-128k-instruct (microsoft/phi-3-mini-128k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-mini-128k-instruct)
 
-**Prompt**: A crystal-clear ice cave with frozen stalactites and a faint blue glow from embedded minerals.
+**Prompt**:  A lone, ancient oak tree standing proudly in an abandoned Victorian garden, its sprawling roots uncovering a forgotten wrought-iron bench blanketed with ivy.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754434667844-9byxc7.png)
+![Generated Image](./images/generated-1754500827302-su125f.png)
