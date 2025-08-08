@@ -1,7 +1,7 @@
-**Model**: [phi-3.5-vision-instruct (microsoft/phi-3.5-vision-instruct)](https://github.com/marketplace/models/azureml/Phi-3-5-vision-instruct)
+**Model**: [cohere-command-r-08-2024 (cohere/cohere-command-r-08-2024)](https://github.com/marketplace/models/azureml-cohere/Cohere-command-r-08-2024)
 
-**Prompt**:  A towering lighthouse at dusk, illuminated amid the deepening gloom, sends a strong beam of light upward, reflecting off the rain-soaked rocky coastline, casting an ethereal glow over the water surrounding the island.
+**Prompt**: "Capture the essence of an ancient oak, its gnarled branches reaching skyward, illuminated by a golden sunset, creating a silhouette of strength and wisdom."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754587167926-ye0mci.png)
+![Generated Image](./images/generated-1754673231115-u59hn9.png)
