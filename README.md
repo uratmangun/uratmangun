@@ -1,7 +1,7 @@
-**Model**: [cohere-command-r-08-2024 (cohere/cohere-command-r-08-2024)](https://github.com/marketplace/models/azureml-cohere/Cohere-command-r-08-2024)
+**Model**: [phi-3.5-vision-instruct (microsoft/phi-3.5-vision-instruct)](https://github.com/marketplace/models/azureml/Phi-3-5-vision-instruct)
 
-**Prompt**: "Capture the essence of an ancient oak, its gnarled branches reaching skyward, illuminated by a golden sunset, creating a silhouette of strength and wisdom."
+**Prompt**:  A twisted metal sculpture transforms into a swirling vortex of energy when moonlight strikes it at just the right angle.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754673231115-u59hn9.png)
+![Generated Image](./images/generated-1754759659661-k6077f.png)
