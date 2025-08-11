@@ -146,7 +146,12 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
       'luminous glass greenhouse filled with colorful exotic flowers and bright sunlight streaming through',
       'glowing city skyline at sunset with bright windows reflecting orange and pink sky colors',
       'sunny farmers market stall overflowing with bright colorful fruits and vegetables in wicker baskets',
-      'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible'
+      'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible',
+      'adorable fluffy purple monster with bright emerald eyes and soft rainbow fur sitting in golden sunlight',
+      'cute orange furry creature with oversized blue eyes and tiny sparkly horns under radiant studio lighting',
+      'friendly pink monster with silky white fur patches and glowing yellow eyes in a bright meadow',
+      'whimsical teal furry beast with rainbow stripes and big expressive eyes basking in luminous morning light',
+      'charming lavender monster with fluffy cloud-like fur and crystal blue eyes in radiant garden setting'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
     return { prompt: selectedPrompt || 'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling', model: 'Fallback: Default Prompt' };
@@ -155,15 +160,16 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
   const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for bright, vibrant image generation.
 Rules:
 1. Be creative and unique
-2. Focus ONLY on inanimate objects (no animals, people, or living creatures)
+2. Focus on either inanimate objects OR cute furry monsters
 3. Use bright, vibrant colors and cheerful themes
-4. Include objects like furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
-5. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
-6. Add rich details about textures, materials, and colors
-7. Keep it concise but imaginative
-8. Only respond with the prompt, no additional text
+4. For inanimate objects: include furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
+5. For cute furry monsters: include adorable, friendly creatures with soft fur, big eyes, and whimsical features
+6. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
+7. Add rich details about textures, materials, and colors
+8. Keep it concise but imaginative
+9. Only respond with the prompt, no additional text
 
-Generate one random bright image generation prompt with inanimate objects only:`;
+Generate one random bright image generation prompt (either inanimate objects or cute furry monsters):`;
 
   // Try up to 5 times with different models
   // Load free models directly from GitHub
