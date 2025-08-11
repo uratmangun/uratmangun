@@ -147,11 +147,11 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
       'glowing city skyline at sunset with bright windows reflecting orange and pink sky colors',
       'sunny farmers market stall overflowing with bright colorful fruits and vegetables in wicker baskets',
       'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible',
-      'adorable fluffy purple monster with bright emerald eyes and soft rainbow fur sitting in golden sunlight',
-      'cute orange furry creature with oversized blue eyes and tiny sparkly horns under radiant studio lighting',
-      'friendly pink monster with silky white fur patches and glowing yellow eyes in a bright meadow',
-      'whimsical teal furry beast with rainbow stripes and big expressive eyes basking in luminous morning light',
-      'charming lavender monster with fluffy cloud-like fur and crystal blue eyes in radiant garden setting'
+      'adorable purple robot with bright emerald LED eyes and shiny metallic surface sitting in golden sunlight',
+      'cute orange robot with oversized blue sensors and tiny sparkly antennas under radiant studio lighting',
+      'friendly pink robot with sleek white panels and glowing yellow indicators in a bright meadow',
+      'whimsical teal robot with rainbow LED strips and big expressive optical sensors basking in luminous morning light',
+      'charming lavender robot with smooth chrome details and crystal blue display screen in radiant garden setting'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
     return { prompt: selectedPrompt || 'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling', model: 'Fallback: Default Prompt' };
@@ -160,16 +160,16 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
   const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for bright, vibrant image generation.
 Rules:
 1. Be creative and unique
-2. Focus on either inanimate objects OR cute furry monsters
+2. Focus on either inanimate objects OR cute robots
 3. Use bright, vibrant colors and cheerful themes
 4. For inanimate objects: include furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
-5. For cute furry monsters: include adorable, friendly creatures with soft fur, big eyes, and whimsical features
+5. For cute robots: include adorable, friendly mechanical creatures with shiny metal surfaces, LED lights, and whimsical features
 6. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
 7. Add rich details about textures, materials, and colors
 8. Keep it concise but imaginative
 9. Only respond with the prompt, no additional text
 
-Generate one random bright image generation prompt (either inanimate objects or cute furry monsters):`;
+Generate one random bright image generation prompt (either inanimate objects or cute robots):`;
 
   // Try up to 5 times with different models
   // Load free models directly from GitHub
