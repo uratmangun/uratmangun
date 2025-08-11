@@ -1,7 +1,7 @@
-**Model**: [codestral-2501 (mistral-ai/codestral-2501)](https://github.com/marketplace/models/azureml-mistral/Codestral-2501)
+**Model**: [phi-3.5-mini-instruct (microsoft/phi-3.5-mini-instruct)](https://github.com/marketplace/models/azureml/Phi-3-5-mini-instruct)
 
-**Prompt**: A towering, ancient oak tree standing defiantly amidst a storm, its gnarled roots intertwined with a rusted, Victorian-era iron fence, and a lone, weathered bench nearby, as if waiting for a ghostly visitor.
+**Prompt**:  A bustling cityscape at sunrise, with skyscrapers ablaze in warm orange and pink hues, reflecting vibrant rainbows off their glass facades. The streets are alive with luminous neon signs and vibrant murals, while self-driving cars glide on solar-powered roads. A whimsical mural of lush, greenery-adorned furniture in a sunlit studio apartment complete with bold, textured patterns and multicolored accents. The air shimmers with the light of bioluminescent street lamps, casting a radiant glow over a labyrinth of cobblestone pathways and glistening fountains.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754357896913-16qcdw.png)
+![Generated Image](./images/generated-1754912257765-icr74c.png)

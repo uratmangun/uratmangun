@@ -137,30 +137,33 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
   if (!CONFIG.ADMIN_TOKEN) {
     // Return a default random prompt if no API key
     const defaultPrompts = [
-      'a majestic oak tree in a field',
-      'a wooden chair in a cozy room',
-      'a vintage lamp on a desk',
-      'a mountain landscape at sunset',
-      'a house with a garden and fence',
-      'a bookshelf filled with books',
-      'a classic car in a driveway',
-      'a bridge over a calm river',
-      'a lighthouse on a rocky shore',
-      'a castle on a hill'
+      'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling',
+      'luminous crystal chandelier with rainbow prisms casting colorful light patterns in an elegant room',
+      'glowing neon arcade machines in vibrant colors with bright LED displays and retro cabinet designs',
+      'sunny tropical beach with bright turquoise waves, colorful beach umbrellas, and golden sand',
+      'radiant hot air balloons in rainbow colors floating above bright green rolling hills at sunrise',
+      'bright red electric guitar with glossy finish under stage lights with chrome hardware gleaming',
+      'luminous glass greenhouse filled with colorful exotic flowers and bright sunlight streaming through',
+      'glowing city skyline at sunset with bright windows reflecting orange and pink sky colors',
+      'sunny farmers market stall overflowing with bright colorful fruits and vegetables in wicker baskets',
+      'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
-    return { prompt: selectedPrompt || 'a majestic oak tree in a field', model: 'Fallback: Default Prompt' };
+    return { prompt: selectedPrompt || 'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling', model: 'Fallback: Default Prompt' };
   }
 
-  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for image generation.
+  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for bright, vibrant image generation.
 Rules:
 1. Be creative and unique
-2. Focus on concrete inanimate subjects (trees, furniture, buildings, landscapes, etc.)
-3. Include some descriptive details
-4. Keep it concise but imaginative
-5. Only respond with the prompt, no additional text
+2. Focus ONLY on inanimate objects (no animals, people, or living creatures)
+3. Use bright, vibrant colors and cheerful themes
+4. Include objects like furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
+5. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
+6. Add rich details about textures, materials, and colors
+7. Keep it concise but imaginative
+8. Only respond with the prompt, no additional text
 
-Generate one random image generation prompt:`;
+Generate one random bright image generation prompt with inanimate objects only:`;
 
   // Try up to 5 times with different models
   // Load free models directly from GitHub
