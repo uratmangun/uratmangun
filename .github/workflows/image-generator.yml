@@ -39,6 +39,7 @@ jobs:
         env:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           pnpm run image-generator
 
