@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { fetchAllModels } from './free-models.js';
 import Together from 'together-ai';
+import { generateImage as generateQwenImage } from './qwen-image.js';
 
 // Types
 interface Model {
@@ -147,11 +148,11 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
       'glowing city skyline at sunset with bright windows reflecting orange and pink sky colors',
       'sunny farmers market stall overflowing with bright colorful fruits and vegetables in wicker baskets',
       'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible',
-      'adorable purple robot with bright emerald LED eyes and shiny metallic surface sitting in golden sunlight',
-      'cute orange robot with oversized blue sensors and tiny sparkly antennas under radiant studio lighting',
-      'friendly pink robot with sleek white panels and glowing yellow indicators in a bright meadow',
-      'whimsical teal robot with rainbow LED strips and big expressive optical sensors basking in luminous morning light',
-      'charming lavender robot with smooth chrome details and crystal blue display screen in radiant garden setting'
+      'bulky cobalt-blue robot with armored plating, visible rivets, and hydraulic pistons, wearing a chrome jetpack firing soft golden thrusters under studio lighting',
+      'compact tangerine service bot on rubber treads with extendable tool arms and glowing cyan status LEDs, bathed in radiant workshop light',
+      'sleek pearl-white hover robot with four ring thrusters and neon-magenta underglow, hovering over a sunny meadow with sparkles',
+      'whimsical lime-green spider-like robot with six articulated legs, rainbow LED strips, and glossy enamel panels in luminous morning light',
+      'friendly violet mech with matte-purple shoulder shields, chrome forearm tools, and sapphire visor, backlit by warm sunset glow'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
     return { prompt: selectedPrompt || 'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling', model: 'Fallback: Default Prompt' };
@@ -163,7 +164,7 @@ Rules:
 2. Focus on either inanimate objects OR cute robots
 3. Use bright, vibrant colors and cheerful themes
 4. For inanimate objects: include furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
-5. For cute robots: include adorable, friendly mechanical creatures with shiny metal surfaces, LED lights, and whimsical features
+5. For cute robots: vary shapes and mobility (bulky armored mechs, jetpacks, hover units, treads, multi-legged walkers), add whimsical accessories (antennae, tool arms, shields), with shiny metals, LEDs, and interesting silhouettes
 6. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
 7. Add rich details about textures, materials, and colors
 8. Keep it concise but imaginative
@@ -229,11 +230,40 @@ Generate one random bright image generation prompt (either inanimate objects or 
 }
 
 /**
- * Call GitHub Models API to generate ASCII art
+ * Generate image using Qwen API first, fallback to Together AI
  */
 async function generateImage(prompt: string): Promise<string> {
+  // Create images directory if it doesn't exist
+  const imagesDir = join(__dirname, '..', 'images');
+  if (!existsSync(imagesDir)) {
+    mkdirSync(imagesDir, { recursive: true });
+  }
+
+  // Try Qwen image generation first
+  try {
+    console.log('🎨 Trying Qwen image generation...');
+    const qwenResult = await generateQwenImage(prompt);
+    
+    if (qwenResult.images && qwenResult.images[0]) {
+      const image = qwenResult.images[0];
+      
+      if (image.url) {
+        // Save base64 image from Qwen
+        const imageName = generateRandomImageName();
+        const imagePath = join(imagesDir, imageName);
+        const base64 = image.url.replace(/^data:image\/\w+;base64,/, '');
+        writeFileSync(imagePath, base64, "base64");
+        console.log(`✅ Qwen image saved to ${imagePath}`);
+        return imageName;
+      } 
+    }
+  } catch (qwenError: any) {
+    console.log('⚠️  Qwen generation failed, falling back to Together AI:', qwenError.message);
+  }
+
+  // Fallback to Together AI
   if (!CONFIG.TOGETHER_API_KEY) {
-    console.log('⚠️  No API key found, using mock image generator for demonstration');
+    console.log('⚠️  No Together API key found, using mock image generator for demonstration');
     return generateRandomImageName();
   }
 
@@ -242,17 +272,12 @@ async function generateImage(prompt: string): Promise<string> {
   });
 
   try {
+    console.log('🎨 Using Together AI fallback...');
     const response = await together.images.create({
       model: "black-forest-labs/FLUX.1-schnell-Free",
       prompt: prompt,
       response_format: "base64"
     });
-
-    // Create images directory if it doesn't exist
-    const imagesDir = join(__dirname, '..', 'images');
-    if (!existsSync(imagesDir)) {
-      mkdirSync(imagesDir, { recursive: true });
-    }
 
     // Save the base64 image data to a file
     if (response.data && response.data.length > 0) {
@@ -261,16 +286,16 @@ async function generateImage(prompt: string): Promise<string> {
         const imageName = generateRandomImageName();
         const imagePath = join(imagesDir, imageName);
         writeFileSync(imagePath, imageObject.b64_json, "base64");
-        console.log(`✅ Image saved to ${imagePath}`);
+        console.log(`✅ Together AI image saved to ${imagePath}`);
         return imageName;
       } else {
-        throw new Error('❌ No image data received');
+        throw new Error('❌ No image data received from Together AI');
       }
     } else {
-      throw new Error('❌ No image data received');
+      throw new Error('❌ No image data received from Together AI');
     }
   } catch (error: any) {
-    console.error('❌ Error generating image:', error);
+    console.error('❌ Error generating image with Together AI:', error);
     throw error;
   }
 }

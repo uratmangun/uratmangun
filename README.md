@@ -1,7 +1,7 @@
-**Model**: [llama-4-maverick-17b-128e-instruct-fp8 (meta/llama-4-maverick-17b-128e-instruct-fp8)](https://github.com/marketplace/models/azureml-meta/Llama-4-Maverick-17B-128E-Instruct-FP8)
+**Model**: [gpt-4.1 (openai/gpt-4.1)](https://github.com/marketplace/models/azure-openai/gpt-4-1)
 
-**Prompt**: "A whimsical, sunny meadow filled with colorful, fluffy pastel-colored cupcakes with swirling frosting and sprinkles, surrounded by tiny, adorable furry creatures with soft, curly fur and big, shining eyes, playing with shiny, metallic musical instruments under a radiant, warm studio lighting, with a bright blue sky and lush green grass with vibrant wildflowers."
+**Prompt**: A cheerful, spherical robot vendor with glossy chrome surfaces, glowing rainbow LEDs, and tiny mechanical arms, perched on bright orange hover treads, selling radiant jewel-toned fruit from a luminous neon-lit cart under a sunny sky; the scene bursts with vibrant blues, pinks, and lime greens, while the fruit gleams with sugary crystal textures.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1754917419854-4m8ryv.png)
+![Generated Image](./images/generated-1755043158814-a0tw5z.png)
