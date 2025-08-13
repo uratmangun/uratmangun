@@ -1,7 +1,7 @@
-**Model**: [gpt-4.1 (openai/gpt-4.1)](https://github.com/marketplace/models/azure-openai/gpt-4-1)
+**Model**: [mistral-medium-2505 (mistral-ai/mistral-medium-2505)](https://github.com/marketplace/models/azureml-mistral/mistral-medium-2505)
 
-**Prompt**: A cheerful, spherical robot vendor with glossy chrome surfaces, glowing rainbow LEDs, and tiny mechanical arms, perched on bright orange hover treads, selling radiant jewel-toned fruit from a luminous neon-lit cart under a sunny sky; the scene bursts with vibrant blues, pinks, and lime greens, while the fruit gleams with sugary crystal textures.
+**Prompt**: "16-bit pixel art of a glowing neon vending machine in a retro arcade, with chrome accents and a glass display, under vibrant studio lighting."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755043158814-a0tw5z.png)
+![Generated Image](./images/generated-1755044013406-et2wuu.png)

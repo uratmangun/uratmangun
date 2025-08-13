@@ -138,39 +138,35 @@ async function generateRandomPrompt(): Promise<RandomPromptResult> {
   if (!CONFIG.ADMIN_TOKEN) {
     // Return a default random prompt if no API key
     const defaultPrompts = [
-      'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling',
-      'luminous crystal chandelier with rainbow prisms casting colorful light patterns in an elegant room',
-      'glowing neon arcade machines in vibrant colors with bright LED displays and retro cabinet designs',
-      'sunny tropical beach with bright turquoise waves, colorful beach umbrellas, and golden sand',
-      'radiant hot air balloons in rainbow colors floating above bright green rolling hills at sunrise',
-      'bright red electric guitar with glossy finish under stage lights with chrome hardware gleaming',
-      'luminous glass greenhouse filled with colorful exotic flowers and bright sunlight streaming through',
-      'glowing city skyline at sunset with bright windows reflecting orange and pink sky colors',
-      'sunny farmers market stall overflowing with bright colorful fruits and vegetables in wicker baskets',
-      'radiant vintage jukebox with neon lights, chrome details, and colorful vinyl records visible',
-      'bulky cobalt-blue robot with armored plating, visible rivets, and hydraulic pistons, wearing a chrome jetpack firing soft golden thrusters under studio lighting',
-      'compact tangerine service bot on rubber treads with extendable tool arms and glowing cyan status LEDs, bathed in radiant workshop light',
-      'sleek pearl-white hover robot with four ring thrusters and neon-magenta underglow, hovering over a sunny meadow with sparkles',
-      'whimsical lime-green spider-like robot with six articulated legs, rainbow LED strips, and glossy enamel panels in luminous morning light',
-      'friendly violet mech with matte-purple shoulder shields, chrome forearm tools, and sapphire visor, backlit by warm sunset glow'
+      '8-bit pixel art vintage yellow sports car with chrome highlights, chunky pixels, limited 32-color palette, studio lighting gleam',
+      'pixel art crystal chandelier casting rainbow prisms, strong outlines, subtle dithering, bright elegant room backdrop',
+      'retro game pixel art neon arcade cabinet row with vibrant LED screens, bold colors, hard edges, glossy highlights',
+      '16-bit pixel art tropical beach, turquoise waves and colorful umbrellas, sun sparkle on water, chunky pixels, clean sky',
+      'pixel art hot air balloons in rainbow colors over green hills at sunrise, limited palette, soft dithering, crisp outlines',
+      '8-bit pixel art red electric guitar with chrome hardware, hard-edged shading, studio glow, vibrant palette',
+      'isometric pixel art glass greenhouse filled with bright flowers, sunbeams, limited palette, clean outlines',
+      'pixel art city skyline at sunset, glowing windows against orange-pink sky, chunky pixels, minimal detail',
+      'retro pixel art market stall with bright fruits and vegetables in baskets, sunny lighting, limited color set',
+      'pixel art rainbow-lit jukebox with chrome trim, glossy pixels, vibrant LEDs, strong outlines',
+      '8-bit pixel art friendly service robot on treads with cyan LEDs, shiny metal panels, radiant workshop light',
+      '16-bit pixel art hover robot with ring thrusters and neon underglow, over sunny meadow, bright candy colors',
+      'pixel art spider-like utility bot with articulated legs and rainbow LED strips, glossy enamel panels, luminous morning light'
     ];
     const selectedPrompt = defaultPrompts[Math.floor(Math.random() * defaultPrompts.length)];
     return { prompt: selectedPrompt || 'bright yellow vintage sports car gleaming under radiant studio lighting with chrome details sparkling', model: 'Fallback: Default Prompt' };
   }
 
-  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for bright, vibrant image generation.
+  const randomPromptRequest = `You are a creative prompt generator. Generate a random and interesting subject for bright, vibrant PIXEL ART image generation.
 Rules:
-1. Be creative and unique
-2. Focus on either inanimate objects OR cute robots
-3. Use bright, vibrant colors and cheerful themes
-4. For inanimate objects: include furniture, vehicles, buildings, landscapes, food, tools, instruments, etc.
-5. For cute robots: vary shapes and mobility (bulky armored mechs, jetpacks, hover units, treads, multi-legged walkers), add whimsical accessories (antennae, tool arms, shields), with shiny metals, LEDs, and interesting silhouettes
-6. Include bright lighting descriptions (sunny, glowing, radiant, luminous, studio lighting, etc.)
-7. Add rich details about textures, materials, and colors
-8. Keep it concise but imaginative
-9. Only respond with the prompt, no additional text
+1. It MUST be pixel art: 8-bit or 16-bit retro game aesthetic with chunky pixels, strong outlines, limited 16–32 color palette, and optional dithering.
+2. Subjects: inanimate objects, props, vehicles, buildings, instruments, food, or cute robots (no people or animals).
+3. Composition: single subject or small scene; isometric or side view; clean or simple background.
+4. Include bright lighting cues (sunny, glowing, radiant, luminous, or studio lighting) and material hints (metal, glass, wood) in pixel-art terms.
+5. Keep it concise but imaginative (about one short sentence, max ~25 words).
+6. Start with phrases like "pixel art", "8-bit pixel art", or "16-bit pixel art".
+7. Only respond with the prompt, no additional text.
 
-Generate one random bright image generation prompt (either inanimate objects or cute robots):`;
+Generate one random bright pixel art image prompt:`;
 
   // Try up to 5 times with different models
   // Load free models directly from GitHub
