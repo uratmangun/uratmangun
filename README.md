@@ -1,7 +1,7 @@
-**Model**: [mistral-medium-2505 (mistral-ai/mistral-medium-2505)](https://github.com/marketplace/models/azureml-mistral/mistral-medium-2505)
+**Model**: [ai21-jamba-1.5-mini (ai21-labs/ai21-jamba-1.5-mini)](https://github.com/marketplace/models/azureml-ai21/AI21-Jamba-1-5-Mini)
 
-**Prompt**: "16-bit pixel art of a glowing neon vending machine in a retro arcade, with chrome accents and a glass display, under vibrant studio lighting."
+**Prompt**:  8-bit pixel art: a glowing, luminous blue crystal sphere on a wooden pedestal.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755044013406-et2wuu.png)
+![Generated Image](./images/generated-1755048943964-inxj8s.png)
