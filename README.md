@@ -1,7 +1,7 @@
-**Model**: [ai21-jamba-1.5-mini (ai21-labs/ai21-jamba-1.5-mini)](https://github.com/marketplace/models/azureml-ai21/AI21-Jamba-1-5-Mini)
+**Model**: [ministral-3b (mistral-ai/ministral-3b)](https://github.com/marketplace/models/azureml-mistral/Ministral-3B)
 
-**Prompt**:  8-bit pixel art: a glowing, luminous blue crystal sphere on a wooden pedestal.
+**Prompt**: "8-bit pixel art: A glowing, metallic robot arm reaching for a floating, pixelated sun."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755048943964-inxj8s.png)
+![Generated Image](./images/generated-1755213133752-7jvffq.png)
