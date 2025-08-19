@@ -1,7 +1,7 @@
-**Model**: [llama-3.3-70b-instruct (meta/llama-3.3-70b-instruct)](https://github.com/marketplace/models/azureml-meta/Llama-3-3-70B-Instruct)
+**Model**: [ministral-3b (mistral-ai/ministral-3b)](https://github.com/marketplace/models/azureml-mistral/Ministral-3B)
 
-**Prompt**: 16-bit pixel art: Glowing neon arcade cabinet on a sunny rooftop.
+**Prompt**: "8-bit pixel art: A glowing, metallic robot arm reaching towards a vibrant, pixelated sun."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755537408332-k36ivt.png)
+![Generated Image](./images/generated-1755623695790-gs8nn9.png)
