@@ -1,7 +1,7 @@
-**Model**: [ministral-3b (mistral-ai/ministral-3b)](https://github.com/marketplace/models/azureml-mistral/Ministral-3B)
+**Model**: [mistral-large-2411 (mistral-ai/mistral-large-2411)](https://github.com/marketplace/models/azureml-mistral/Mistral-Large-2411)
 
-**Prompt**: "8-bit pixel art: A glowing, metallic robot arm reaching towards a vibrant, pixelated sun."
+**Prompt**: 16-bit pixel art of a glowing, futuristic public phone booth under the northern lights.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755623695790-gs8nn9.png)
+![Generated Image](./images/generated-1755710059643-xlacvq.png)
