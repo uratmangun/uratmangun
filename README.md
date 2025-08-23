@@ -1,7 +1,7 @@
-**Model**: [llama-3.2-90b-vision-instruct (meta/llama-3.2-90b-vision-instruct)](https://github.com/marketplace/models/azureml-meta/Llama-3-2-90B-Vision-Instruct)
+**Model**: [phi-4-multimodal-instruct (microsoft/phi-4-multimodal-instruct)](https://github.com/marketplace/models/azureml/Phi-4-multimodal-instruct)
 
-**Prompt**: 8-bit pixel art of a glowing, neon-lit, retro-futuristic cyborg motorcycle, parked on a radiant, gradient rainbow road, with metallic reflections.
+**Prompt**: "16-bit pixel art: Sunny-lit, neon-green parrot perched on a holographic cactus in a desert-themed control room with glowing key consoles, reflecting sharp sunlight."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755882931475-uaqggh.png)
+![Generated Image](./images/generated-1755969271460-ztq4re.png)
