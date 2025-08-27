@@ -1,7 +1,7 @@
-**Model**: [phi-3-small-8k-instruct (microsoft/phi-3-small-8k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-small-8k-instruct)
+**Model**: [phi-4-mini-instruct (microsoft/phi-4-mini-instruct)](https://github.com/marketplace/models/azureml/Phi-4-mini-instruct)
 
-**Prompt**: 16-bit pixel art, isometric view of a sunlit, luminous chrome music box with a delicate wind-up key on a rustic wooden desk.
+**Prompt**: "16-bit pixel art: Splendid arcade machine at a bright, sunny arcade counter; stats box glitches cheerfully, joystick glowing warmly; pixelated candy floss stand with pastel-colored dispenser, metal countertop."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1756228542226-aqf2id.png)
+![Generated Image](./images/generated-1756314871273-lykj1x.png)
