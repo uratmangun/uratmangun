@@ -1,7 +1,7 @@
-**Model**: [phi-4-mini-instruct (microsoft/phi-4-mini-instruct)](https://github.com/marketplace/models/azureml/Phi-4-mini-instruct)
+**Model**: [ai21-jamba-1.5-large (ai21-labs/ai21-jamba-1.5-large)](https://github.com/marketplace/models/azureml-ai21/AI21-Jamba-1-5-Large)
 
-**Prompt**: "16-bit pixel art: Splendid arcade machine at a bright, sunny arcade counter; stats box glitches cheerfully, joystick glowing warmly; pixelated candy floss stand with pastel-colored dispenser, metal countertop."
+**Prompt**:  16-bit pixel art of a glowing neon sign with a futuristic design, casting vibrant light on a city street.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1756314871273-lykj1x.png)
+![Generated Image](./images/generated-1756401262465-lr89so.png)
