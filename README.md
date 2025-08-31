@@ -1,7 +1,7 @@
-**Model**: [llama-3.2-11b-vision-instruct (meta/llama-3.2-11b-vision-instruct)](https://github.com/marketplace/models/azureml-meta/Llama-3-2-11B-Vision-Instruct)
+**Model**: [phi-3-small-128k-instruct (microsoft/phi-3-small-128k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-small-128k-instruct)
 
-**Prompt**: 16-bit pixel art: A gleaming, chrome-plated, 1950s-style diner jukebox, bathed in warm, golden studio lighting, with spinning vinyl records.
+**Prompt**: 16-bit pixel art of a sunlit, chrome-plated hoverbike gliding over a neon grid background.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1756573975504-h3rir0.png)
+![Generated Image](./images/generated-1756660388660-1ddnc8.png)
