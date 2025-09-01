@@ -1,7 +1,7 @@
-**Model**: [phi-3-small-128k-instruct (microsoft/phi-3-small-128k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-small-128k-instruct)
+**Model**: [phi-3-medium-128k-instruct (microsoft/phi-3-medium-128k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-medium-128k-instruct)
 
-**Prompt**: 16-bit pixel art of a sunlit, chrome-plated hoverbike gliding over a neon grid background.
+**Prompt**:  "Pixel art representation of a glowing, radiant sunflower field with metallic, rust-resistant robot bees buzzing around."
 
 ## Generated Image
 
-![Generated Image](./images/generated-1756660388660-1ddnc8.png)
+![Generated Image](./images/generated-1756746819716-02hfqb.png)
