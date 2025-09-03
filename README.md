@@ -1,7 +1,7 @@
-**Model**: [phi-3-medium-128k-instruct (microsoft/phi-3-medium-128k-instruct)](https://github.com/marketplace/models/azureml/Phi-3-medium-128k-instruct)
+**Model**: [llama-3.2-11b-vision-instruct (meta/llama-3.2-11b-vision-instruct)](https://github.com/marketplace/models/azureml-meta/Llama-3-2-11B-Vision-Instruct)
 
-**Prompt**:  "Pixel art, 8-bit, a radiant sunny day scene with a luminous, glowing 16-color palette, featuring a cheerful robot holding a shiny metallic trumpet against a clean, simple background."
+**Prompt**: 16-bit pixel art: A gleaming, metallic, neon-lit, futuristic, robot vacuum cleaner with a spinning top, set against a bright blue background.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1756833233199-8arucf.png)
+![Generated Image](./images/generated-1756919628388-a3wokc.png)
