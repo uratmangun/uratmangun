@@ -1,7 +1,7 @@
-**Model**: [llama-3.3-70b-instruct (meta/llama-3.3-70b-instruct)](https://github.com/marketplace/models/azureml-meta/Llama-3-3-70B-Instruct)
+**Model**: [gpt-4.1-mini (openai/gpt-4.1-mini)](https://github.com/marketplace/models/azure-openai/gpt-4-1-mini)
 
-**Prompt**: 16-bit pixel art: Glowing neon arcade machine with metallic accents.
+**Prompt**: 16-bit pixel art of a glowing glass potion bottle on a wooden table, radiant sunlight casting bright reflections and sparkling highlights, simple gradient background.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1757092440381-9x8p1z.png)
+![Generated Image](./images/generated-1757178725923-d76k38.png)
