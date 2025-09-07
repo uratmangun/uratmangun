@@ -1,7 +1,7 @@
-**Model**: [ai21-jamba-1.5-mini (ai21-labs/ai21-jamba-1.5-mini)](https://github.com/marketplace/models/azureml-ai21/AI21-Jamba-1-5-Mini)
+**Model**: [gpt-4.1-mini (openai/gpt-4.1-mini)](https://github.com/marketplace/models/azure-openai/gpt-4-1-mini)
 
-**Prompt**:  8-bit pixel art: a glowing, luminous blue crystal sphere on a wooden pedestal.
+**Prompt**: 16-bit pixel art of a glowing glass potion bottle on a wooden table, radiant sunlight casting bright reflections and sparkling highlights, simple gradient background.
 
 ## Generated Image
 
-![Generated Image](./images/generated-1755048943964-inxj8s.png)
+![Generated Image](./images/generated-1757178725923-d76k38.png)
