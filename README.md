@@ -1,7 +1,1 @@
-**Model**: [gpt-4.1-mini (openai/gpt-4.1-mini)](https://github.com/marketplace/models/azure-openai/gpt-4-1-mini)
-
-**Prompt**: 16-bit pixel art of a glowing glass potion bottle on a wooden table, radiant sunlight casting bright reflections and sparkling highlights, simple gradient background.
-
-## Generated Image
-
-![Generated Image](./images/generated-1757178725923-d76k38.png)
+<img width="1024" height="637" alt="image" src="https://github.com/user-attachments/assets/02d06a94-8045-4364-ac59-69aa980834e9" />
